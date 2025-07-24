@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Service 1: LocalStack to emulate AWS services (like S3)
+  localstack:
+    image: localstack/localstack:2.3 # Use a specific version for stability
+    container_name: localstack
+    ports:
+      - "4566:4566" # Main endpoint for all services
+      - "4510-4559:4510-4559" # For external service access if needed
+    environment:
+      - SERVICES=s3 # Only enable the services you need
+      - DEBUG=0
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    volumes:
+      - "${PWD}/s3-data:/var/lib/localstack" # Persist S3 data locally
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - glue_network
+
+  # Service 2: The Glue Job Runner
+  glue-job-runner:
+    container_name: glue-job-runner
+    # Build the image from our custom Dockerfile in the 'glue' directory
+    build:
+      context: ./glue
+      dockerfile: Dockerfile
+    depends_on:
+      - localstack # Ensure LocalStack is running before the job starts
+    ports:
+      - "8888:8888" # for jupyter
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+      - GLUE_ENV=local
+    volumes:
+      # Mount the directory containing your glue scripts into the container
+      - ./glue/scripts:/home/glue_user/scripts
+      - ./glue/jupyter_workspace:/home/glue_user/workspace/jupyter_workspace
+    command: /home/glue_user/jupyter/jupyter_start.sh
+    networks:
+      - glue_network
+
+# Define the network for services to communicate
+networks:
+  glue_network:
+    driver: bridge

@@ -201,3 +201,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+glue/jupyter_workspace/*
+
+s3-data/*
