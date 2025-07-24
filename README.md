@@ -33,8 +33,8 @@ The two containers are connected on a shared Docker network, allowing the Glue j
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/your-username/local-glue-environment.git](https://github.com/your-username/local-glue-environment.git)
-    cd local-glue-environment
+    git clone https://github.com/wj-su/glue-local-runner.git
+    cd glue-local-runner
     ```
 
 2.  **Organize your files:**
@@ -97,15 +97,9 @@ To execute your Glue script, you can `exec` into the running `glue-job-runner` c
 
     Open your web browser and navigate to `http://localhost:8888`.
 
-2.  **Find the Jupyter token:**
+2.  **Create and run notebooks:**
 
-    In the terminal where you ran `docker-compose up`, look for a URL containing the login token. It will look something like this:
-
-    ```
-    [http://127.0.0.1:8888/?token=a1b2c3d4e5f6](http://127.0.0.1:8888/?token=a1b2c3d4e5f6)...
-    ```
-
-    Copy and paste this URL into your browser to access the Jupyter environment. You can now create and run notebooks in the `jupyter_workspace` directory.
+    You can now create and run notebooks in the `jupyter_workspace` directory.
 
 ## Project Structure
 
