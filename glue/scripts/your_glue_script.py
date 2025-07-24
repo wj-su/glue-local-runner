@@ -25,8 +25,10 @@ else:
 args = getResolvedOptions(sys.argv, ['JOB_NAME', 'region'])
 
 # --- SparkSession Configuration ---
-# UPDATED: Added a configuration to name the local Hive catalog 'glue_catalog'.
-# This allows the use of 'glue_catalog.database_name' syntax, matching the AWS environment.
+# Configure Spark to connect to a local Hive Metastore and LocalStack S3.
+# The `javax.jdo.option.ConnectionURL` creates a local Derby database as the metastore,
+# forcing Spark to manage metadata locally instead of using the AWS Glue Data Catalog.
+# S3 configurations are pointed to the LocalStack container.
 spark = (
     SparkSession.builder.appName("LocalGlueJob")
     .config(
