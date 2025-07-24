@@ -81,7 +81,7 @@ To execute your Glue script, you can `exec` into the running `glue-job-runner` c
     docker exec -it <container_id_or_name> /bin/bash
     ```
 
-4.  **Run the `glue_spark_submit.sh` script:**
+4.  **Run the spark-submit command:**
 
     Inside the container, run your script using the provided submission script:
 
