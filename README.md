@@ -118,3 +118,9 @@ To execute your Glue script, you can `exec` into the running `glue-job-runner` c
 -   **Adding More Scripts**: Place additional Python scripts in the `./glue/scripts/` directory. They will be automatically mounted into the container.
 -   **Changing Glue Version**: To use a different version of Glue, update the `FROM` instruction in the `Dockerfile` to point to the desired `amazon/aws-glue-libs` image tag. You may also need to adjust the path for the `rm /home/glue_user/spark/conf/hive-site.xml` command.
 -   **Enabling More AWS Services**: To use other emulated AWS services, add them to the `SERVICES` environment variable in the `localstack` service definition in `docker-compose.yaml`.
+
+## Acknowledgements
+
+The core technique of removing `hive-site.xml` to force a local Hive Metastore was inspired by the solution found in this Stack Overflow thread:
+
+-   [Stack Overflow: Write to local Hive metastore instead of AWS Glue Data Catalog](https://stackoverflow.com/questions/74550609/write-to-local-hive-metastore-instead-of-aws-glue-data-catalog-when-developing-a)
